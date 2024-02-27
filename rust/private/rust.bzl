@@ -786,7 +786,7 @@ _rust_test_attrs = dict({
 rust_library = rule(
     implementation = _rust_library_impl,
     provides = COMMON_PROVIDERS,
-    attrs = dict(_common_attrs.items() + {
+    attrs = dict(_common_attrs.items() + _experimental_use_cc_common_link_attrs.items() + {
         "disable_pipelining": attr.bool(
             default = False,
             doc = dedent("""\
@@ -884,7 +884,7 @@ _rust_static_library_transition = transition(
 
 rust_static_library = rule(
     implementation = _rust_static_library_impl,
-    attrs = dict(_common_attrs.items() + {
+    attrs = dict(_common_attrs.items() + _experimental_use_cc_common_link_attrs.items() + {
         "platform": attr.label(
             doc = "Optional platform to transition the static library to.",
             default = None,
@@ -980,7 +980,7 @@ rust_proc_macro = rule(
     # need to declare `_allowlist_function_transition`, see
     # https://docs.bazel.build/versions/main/skylark/config.html#user-defined-transitions.
     attrs = dict(
-        _common_attrs.items(),
+        _common_attrs.items() + _experimental_use_cc_common_link_attrs.items(),
         _allowlist_function_transition = attr.label(
             default = Label("//tools/allowlists/function_transition_allowlist"),
         ),
